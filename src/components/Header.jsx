@@ -1,7 +1,7 @@
 function Header() {
   return (
     <header>
-      <h1>My Goals For This Book</h1>
+      <h1>its Tamas kind of calculator for learning react</h1>
     </header>
   );
 }

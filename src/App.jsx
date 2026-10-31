@@ -1,12 +1,12 @@
-import GoalList from './components/GoalList.jsx';
 import Header from './components/Header.jsx';
+import Calculator from './components/Calculator.jsx';
 
 function App() {
   return (
     <>
       <Header />
       <main>
-        <GoalList />
+        <Calculator />
       </main>
     </>
   );
