@@ -1,13 +1,17 @@
-import FirstGoal from './FirstGoal.jsx';
-import SecondGoal from './SecondGoal.jsx';
-import ThirdGoal from './ThirdGoal.jsx';
+  import GoalItem from './GoalItem.jsx';
 
-function GoalList() {
+  function GoalList() {
   return (
     <ul>
-      <FirstGoal />
-      <SecondGoal />
-      <ThirdGoal />
+      <GoalItem title="Goal 1" >
+        Description for Goal 1
+      </GoalItem>
+      <GoalItem title="Goal 2" >
+        Description for Goal 2
+      </GoalItem>
+      <GoalItem title="Goal 3" >
+        Description for Goal 3
+      </GoalItem>
     </ul>
   );
 }
