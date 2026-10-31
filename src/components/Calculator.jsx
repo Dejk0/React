@@ -1,24 +1,11 @@
-import { useState } from 'react';
-
-function Calculator() {
-  const [number1, setNumber1] = useState(0);
-  const [number2, setNumber2] = useState(0);
-  const [operator, setOperator] = useState('add');
-
-  let result = 0;
-  switch (operator) {
-    case 'add':      result = number1 + number2; break;
-    case 'subtract': result = number1 - number2; break;
-    case 'multiply': result = number1 * number2; break;
-    case 'divide':   result = number2 === 0 ? 0 : number1 / number2; break;
-  }
-
+function Calculator({ operator, onFirstNumberChange, onSecondNumberChange, onOperatorChange }) {
+  
   return (
     <>
       <input type="text" placeholder="Enter a number"
-             onChange={(e) => setNumber1(parseFloat(e.target.value) || 0)} />
+             onChange={onFirstNumberChange} />
 
-      <select value={operator} onChange={(e) => setOperator(e.target.value)}>
+      <select value={operator} onChange={onOperatorChange}>
         <option value="add">+</option>
         <option value="subtract">-</option>
         <option value="multiply">*</option>
@@ -26,9 +13,7 @@ function Calculator() {
       </select>
 
       <input type="text" placeholder="Enter a number"
-             onChange={(e) => setNumber2(parseFloat(e.target.value) || 0)} />
-
-      <div className="result">Result: {result}</div>
+             onChange={onSecondNumberChange} />
     </>
   );
 }
