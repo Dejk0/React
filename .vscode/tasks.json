@@ -6,7 +6,7 @@
             "type": "shell",
             "command": "npm run dev",
             "options": {
-                "cwd": "${workspaceFolder}/React"
+                "cwd": "${workspaceFolder}"
             },
             "isBackground": true,
             "problemMatcher": {

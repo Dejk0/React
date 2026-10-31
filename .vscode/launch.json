@@ -6,7 +6,7 @@
             "request": "launch",
             "name": "Vite: Chrome",
             "url": "http://localhost:5173",
-            "webRoot": "${workspaceFolder}/React",
+            "webRoot": "${workspaceFolder}",
             "preLaunchTask": "vite: dev server"
         }
     ]
