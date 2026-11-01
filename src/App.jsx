@@ -1,35 +1,28 @@
-import Header from './components/Header.jsx';
-import Calculator from './components/Calculator.jsx';
-import Result from './components/Result.jsx';
 import { useState } from 'react';
 
-
 function App() {
-  const [number1, setNumber1] = useState(0);
-  const [number2, setNumber2] = useState(0);
-  const [operator, setOperator] = useState('add');
+  const [enteredEmail, setEnteredEmail] = useState();
+  const [inputIsInvalid, setInputIsInvalid] = useState(false);
 
-  let result = 0;
-  switch (operator) {
-    case 'add':      result = number1 + number2; break;
-    case 'subtract': result = number1 - number2; break;
-    case 'multiply': result = number1 * number2; break;
-    case 'divide':   result = number2 === 0 ? 0 : number1 / number2; break;
+  function handleChangeEmail(event) {
+    setEnteredEmail(event.target.value);
+  }
+
+  function handleSubmitForm(event) {
+    event.preventDefault();
+    const emailIsValid = enteredEmail.includes('@'); 
+    setInputIsInvalid(!emailIsValid);
   }
 
   return (
-    <>
-      <Header />
-      <main>
-        <Calculator 
-          operator={operator}
-          onFirstNumberChange={(e) => setNumber1(parseFloat(e.target.value) || 0)}
-          onSecondNumberChange={(e) => setNumber2(parseFloat(e.target.value) || 0)}
-          onOperatorChange={(e) => setOperator(e.target.value)}
-        />
-        <Result result={result} />
-      </main>
-    </>
+    <section>
+      <form onSubmit={handleSubmitForm}>
+        <label htmlFor="email">Your email</label>
+        <input type="text" id="email" onChange={handleChangeEmail} />
+        <button>Submit</button>
+      </form>
+      {inputIsInvalid && <p>Invalid email address entered!</p>}
+    </section>
   );
 }
 
