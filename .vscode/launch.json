@@ -3,11 +3,12 @@
     "configurations": [
         {
             "type": "chrome",
-            "request": "launch",
+            "request": "attach",
             "name": "Vite: Chrome",
-            "url": "http://localhost:5173",
+            "port": 9222,
+            "url": "http://localhost:5173/*",
             "webRoot": "${workspaceFolder}",
-            "preLaunchTask": "vite: dev server"
+            "preLaunchTask": "dev: start"
         }
     ]
 }
