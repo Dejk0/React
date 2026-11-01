@@ -1,8 +1,26 @@
 import { createContext, useContext, useReducer } from 'react';
 
-const CartContext = createContext(null);
+type Product = { id: string; title: string; price: number };
+type CartItem = Product & { qty: number };
+type CartAction =
+  | { type: 'add'; item: Product }
+  | { type: 'remove'; id: string }
+  | { type: 'clear' };
+type CartContextValue = {
+  cart: CartItem[];
+  dispatch: React.Dispatch<CartAction>;
+};
 
-function cartReducer(state, action) {
+const CartContext = createContext<CartContextValue | null>(null);
+
+// throws if used outside <CartProvider>, so callers get a non-null value
+function useCart() {
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error('useCart must be used inside CartProvider');
+  return ctx;
+}
+
+function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
   switch (action.type) {
     case 'add': {
       const existing = state.find((i) => i.id === action.item.id);
@@ -18,22 +36,22 @@ function cartReducer(state, action) {
     case 'clear':
       return [];
     default:
-      throw new Error(`Unknown action: ${action.type}`);
+      throw new Error('Unknown action');
   }
 }
 
-function CartProvider({ children }) {
+function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, dispatch] = useReducer(cartReducer, []);
   return <CartContext value={{ cart, dispatch }}>{children}</CartContext>;
 }
 
-const PRODUCTS = [
+const PRODUCTS: Product[] = [
   { id: 'p1', title: 'Chair', price: 269.99 },
   { id: 'p2', title: 'Video game', price: 99.99 },
 ];
 
 function ProductList() {
-  const { dispatch } = useContext(CartContext);
+  const { dispatch } = useCart();
   return (
     <ul>
       {PRODUCTS.map((p) => (
@@ -47,7 +65,7 @@ function ProductList() {
 }
 
 function Cart() {
-  const { cart, dispatch } = useContext(CartContext);
+  const { cart, dispatch } = useCart();
   const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
   return (
     <div>

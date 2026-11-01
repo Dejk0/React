@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 // Custom hook 1: state that is persisted in localStorage
-function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(() => {
+function useLocalStorage<T>(key: string, initialValue: T) {
+  const [value, setValue] = useState<T>(() => {
     try {
       const stored = localStorage.getItem(key);
       return stored !== null ? JSON.parse(stored) : initialValue;
@@ -19,13 +19,17 @@ function useLocalStorage(key, initialValue) {
     }
   }, [key, value]);
 
-  return [value, setValue];
+  return [value, setValue] as const;
 }
 
 // Custom hook 2: reusable data fetching
-function useFetch(url) {
+function useFetch<T = unknown>(url: string) {
   // result is tagged with its url, so "loading" can be derived
-  const [result, setResult] = useState({ url: null, data: null, error: null });
+  const [result, setResult] = useState<{
+    url: string | null;
+    data: T | null;
+    error: string | null;
+  }>({ url: null, data: null, error: null });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -47,9 +51,11 @@ function useFetch(url) {
   return { data: loading ? null : result.data, error: loading ? null : result.error, loading };
 }
 
+type Post = { id: number; title: string };
+
 export default function CustomHooksExample() {
   const [name, setName] = useLocalStorage('example-name', '');
-  const { data, loading, error } = useFetch(
+  const { data, loading, error } = useFetch<Post[]>(
     'https://jsonplaceholder.typicode.com/posts?_limit=3'
   );
 

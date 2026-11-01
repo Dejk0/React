@@ -1,5 +1,11 @@
 // props: inputs from parent to child; `children` is the nested content
-function Card({ title, price = 0, children }) {
+type CardProps = {
+  title: string;
+  price?: number;
+  children?: React.ReactNode;
+};
+
+function Card({ title, price = 0, children }: CardProps) {
   return (
     <div style={{ border: '1px solid #888', padding: '0.5rem', margin: '0.5rem 0' }}>
       <h3>{title}</h3>

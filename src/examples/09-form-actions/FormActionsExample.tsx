@@ -8,7 +8,7 @@ function SubmitButton() {
 }
 
 // fake backend
-const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export default function FormActionsExample() {
   const [todos, setTodos] = useState(['Learn React']);
@@ -17,9 +17,14 @@ export default function FormActionsExample() {
     (current, newTodo) => [...current, `${newTodo} (saving...)`]
   );
 
-  async function addTodoAction(prevState, formData) {
-    const title = formData.get('title')?.toString().trim();
-    if (!title || title.length < 3) {
+  type FormState = { error: string | null; title: string };
+
+  async function addTodoAction(
+    _prevState: FormState,
+    formData: FormData
+  ): Promise<FormState> {
+    const title = formData.get('title')?.toString().trim() ?? '';
+    if (title.length < 3) {
       return { error: 'Title must be at least 3 characters.', title };
     }
     addOptimisticTodo(title); // show immediately
@@ -28,7 +33,7 @@ export default function FormActionsExample() {
     return { error: null, title: '' };
   }
 
-  const [state, formAction] = useActionState(addTodoAction, {
+  const [state, formAction] = useActionState<FormState, FormData>(addTodoAction, {
     error: null,
     title: '',
   });

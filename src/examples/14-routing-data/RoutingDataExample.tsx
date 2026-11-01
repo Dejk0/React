@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 import {
+  type ActionFunctionArgs,
   createMemoryRouter,
   Form,
+  type LoaderFunctionArgs,
   Link,
   Outlet,
   redirect,
@@ -11,30 +13,31 @@ import {
 } from 'react-router';
 
 // fake in-memory "database"
-const posts = [
+type Post = { id: string; title: string; body: string };
+const posts: Post[] = [
   { id: '1', title: 'Hello router', body: 'Loaders fetch data before render.' },
   { id: '2', title: 'Second post', body: 'Actions handle form submissions.' },
 ];
-const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 async function postsLoader() {
   await wait(300);
   return posts;
 }
 
-async function postLoader({ params }) {
+async function postLoader({ params }: LoaderFunctionArgs) {
   await wait(300);
   const post = posts.find((p) => p.id === params.postId);
   if (!post) throw new Response('Not found', { status: 404 });
   return post;
 }
 
-async function newPostAction({ request }) {
+async function newPostAction({ request }: ActionFunctionArgs) {
   const form = await request.formData();
   posts.push({
     id: String(posts.length + 1),
-    title: form.get('title'),
-    body: form.get('body'),
+    title: String(form.get('title')),
+    body: String(form.get('body')),
   });
   return redirect('/');
 }
@@ -55,7 +58,7 @@ function Root() {
 }
 
 function PostList() {
-  const list = useLoaderData();
+  const list = useLoaderData() as Post[];
   return (
     <ul>
       {list.map((p) => (
@@ -68,7 +71,7 @@ function PostList() {
 }
 
 function PostDetail() {
-  const post = useLoaderData();
+  const post = useLoaderData() as Post;
   return (
     <article>
       <h3>{post.title}</h3>

@@ -1,7 +1,15 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 
 // memo: skip re-rendering when props are unchanged
-const ExpensiveList = memo(function ExpensiveList({ items, onSelect }) {
+type ExpensiveListProps = {
+  items: string[];
+  onSelect: (item: string) => void;
+};
+
+const ExpensiveList = memo(function ExpensiveList({
+  items,
+  onSelect,
+}: ExpensiveListProps) {
   // open the console: this only logs when props actually changed
   console.log('ExpensiveList rendered');
   return (
@@ -32,7 +40,7 @@ export default function BehindScenesExample() {
     [filter]
   );
   // stable function identity so memo() on the child actually works
-  const handleSelect = useCallback((item) => setSelected(item), []);
+  const handleSelect = useCallback((item: string) => setSelected(item), []);
 
   return (
     <section>

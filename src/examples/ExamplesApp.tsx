@@ -32,13 +32,15 @@ const EXAMPLES = {
 };
 
 export default function ExamplesApp() {
-  const [current, setCurrent] = useState(Object.keys(EXAMPLES)[0]);
+  const [current, setCurrent] = useState<keyof typeof EXAMPLES>(
+    Object.keys(EXAMPLES)[0] as keyof typeof EXAMPLES
+  );
   const Example = EXAMPLES[current];
 
   return (
     <main>
       <nav style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-        {Object.keys(EXAMPLES).map((name) => (
+        {(Object.keys(EXAMPLES) as (keyof typeof EXAMPLES)[]).map((name) => (
           <button
             key={name}
             onClick={() => setCurrent(name)}

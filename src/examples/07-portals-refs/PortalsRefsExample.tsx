@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-function Modal({ onClose }) {
+function Modal({ onClose }: { onClose: () => void }) {
   // rendered into document.body, outside the normal component tree position
   return createPortal(
     <div
@@ -20,14 +20,14 @@ function Modal({ onClose }) {
 }
 
 export default function PortalsRefsExample() {
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
 
   return (
     <section>
       <h2>07 - Portals &amp; Refs</h2>
       <input ref={inputRef} placeholder="I get focused by the button" />
-      <button onClick={() => inputRef.current.focus()}>Focus input (ref)</button>
+      <button onClick={() => inputRef.current?.focus()}>Focus input (ref)</button>
       <button onClick={() => setOpen(true)}>Open modal (portal)</button>
       {open && <Modal onClose={() => setOpen(false)} />}
     </section>

@@ -13,7 +13,7 @@ function App() {
   function handleAddProduct() {
     setProducts((curProducts) =>
       curProducts.concat({
-        id: new Date().getTime(),
+        id: String(new Date().getTime()),
         title: 'Another new product',
         price: 15.99,
       })

@@ -12,10 +12,13 @@ function Timer() {
   return <p>Timer running for {seconds}s</p>;
 }
 
+type User = { id: number; name: string; email: string };
+type Result = { id: number | null; user: User | null; error: string | null };
+
 function UserLoader() {
   const [userId, setUserId] = useState(1);
   // result is tagged with the id it belongs to, so "loading" can be derived
-  const [result, setResult] = useState({ id: null, user: null, error: null });
+  const [result, setResult] = useState<Result>({ id: null, user: null, error: null });
 
   useEffect(() => {
     const controller = new AbortController();
