@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import RefForm from './RefForm';
+import MainNavigation from './MainNavigation';
 
 function Modal({ onClose }: { onClose: () => void }) {
   // rendered into document.body, outside the normal component tree position
@@ -30,6 +32,8 @@ export default function PortalsRefsExample() {
       <button onClick={() => inputRef.current?.focus()}>Focus input (ref)</button>
       <button onClick={() => setOpen(true)}>Open modal (portal)</button>
       {open && <Modal onClose={() => setOpen(false)} />}
+      <RefForm />
+      <MainNavigation />
     </section>
   );
 }
