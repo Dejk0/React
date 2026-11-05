@@ -1,0 +1,28 @@
+/* CSS Modules: class names are rewritten (e.g. "_badge_x7f2k_1"),
+   so they can't collide with any other "badge" class in the app. */
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid #888;
+  cursor: pointer;
+}
+
+/* Pseudo-classes work here - they don't work in inline styles. */
+.badge:hover {
+  border-color: #333;
+}
+
+.active {
+  background: #4caf50;
+  color: white;
+}
+
+.large {
+  font-size: 1.25rem;
+}
+
+@media (max-width: 600px) {
+  .badge {
+    width: 100%;
+  }
+}

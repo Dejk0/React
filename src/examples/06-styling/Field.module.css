@@ -1,0 +1,30 @@
+.field {
+  display: block;
+  margin: 0.75rem auto;
+  max-width: 20rem;
+  text-align: left;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid #888;
+  border-radius: 0.4rem;
+}
+
+.valid {
+  border-color: #4caf50;
+}
+
+.invalid {
+  border-color: #e53935;
+  background: #fdecea;
+}
+
+.error {
+  color: #e53935;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
+}

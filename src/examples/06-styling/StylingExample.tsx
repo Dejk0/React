@@ -1,25 +1,23 @@
-import { useState } from 'react';
+import InlineStyleDemo from './InlineStyleDemo';
+import CssModuleDemo from './CssModuleDemo';
+import CssVariablesDemo from './CssVariablesDemo';
+import ValidationDemo from './ValidationDemo';
 
-// Dynamic classes + inline styles. (CSS Modules / Tailwind work the same way:
-// you just compute the className string.)
-const css = `
-  .badge { padding: 0.25rem 0.75rem; border-radius: 1rem; border: 1px solid #888; }
-  .badge.active { background: #4caf50; color: white; }
-`;
-
+// Three ways to style a component. Rule of thumb:
+//  - static look, hover, media queries -> CSS Module (or Tailwind)
+//  - runtime value (color, width, ...)  -> CSS variable set via `style`
+//  - tiny one-off                       -> inline style
+//
+// Not shown (needs extra packages): Tailwind (utility classes, same className
+// logic + `clsx`/`tailwind-merge`) and CSS-in-JS (styled-components, Emotion).
 export default function StylingExample() {
-  const [active, setActive] = useState(false);
-
   return (
     <section>
       <h2>06 - Styling</h2>
-      <style>{css}</style>
-      <button className={`badge ${active ? 'active' : ''}`} onClick={() => setActive((a) => !a)}>
-        {active ? 'Active' : 'Inactive'}
-      </button>
-      <p style={{ color: active ? 'green' : 'gray', fontSize: active ? '1.5rem' : '1rem' }}>
-        Inline style driven by state
-      </p>
+      <InlineStyleDemo />
+      <CssModuleDemo />
+      <CssVariablesDemo />
+      <ValidationDemo />
     </section>
   );
 }
